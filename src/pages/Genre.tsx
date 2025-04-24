@@ -3,8 +3,14 @@ import Footer from "../components/Footer.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+interface GenreList {
+    id: number;
+    name: string;
+    description: string;
+}
+
 const Genre = () => {
-    const [genres, setGenres] = useState([]);
+    const [genres, setGenres] = useState<GenreList[]>([]);
 
     const getData = async () => {
         const res = await axios.get("http://localhost:3000/genres");
