@@ -1,5 +1,4 @@
 import Header from "../components/Header.tsx";
-import Album from "../components/Album.tsx";
 import Footer from "../components/Footer.tsx";
 
 const Home = () => {
@@ -15,7 +14,6 @@ const Home = () => {
                         </div>
                     </div>
                 </section>
-                <Album />
             </main>
             <Footer />
         </>

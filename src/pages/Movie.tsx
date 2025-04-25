@@ -4,10 +4,17 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Card from "../components/Card.tsx";
 
+interface Genre {
+    id: number;
+    name: string;
+    description: string;
+}
+
 interface MovieList {
     id: number;
     name: string;
     description: string;
+    genre: Genre;
 }
 
 interface GenreList {
@@ -25,14 +32,14 @@ const Movie = () => {
     const [genreId, setGenreId] = useState<number | null>(null);
 
     const getData = async () => {
-        const res = await axios.get("http://localhost:3000/movies");
+        const res = await axios.get<MovieList[]>("http://localhost:3000/movies");
         if (res.status === 200) {
             setMovies(res.data);
         }
     }
 
     const getGenres = async () => {
-        const res = await axios.get("http://localhost:3000/genres");
+        const res = await axios.get<GenreList[]>("http://localhost:3000/genres");
         if (res.status === 200) {
             setGenres(res.data);
         }
@@ -67,7 +74,7 @@ const Movie = () => {
     }
 
     const editMovie = async (id: number) => {
-        const res = await axios.get(`http://localhost:3000/movies/${id}`);
+        const res = await axios.get<MovieList>(`http://localhost:3000/movies/${id}`);
         const movieData = res.data;
         setName(movieData.name);
         setDescription(movieData.description);
@@ -101,8 +108,8 @@ const Movie = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="selectGenre">Izberi žanr</label>
-                        <select id="selectGenre" class="form-control" value={genreId}
-                                onChange={(e) => setGenreId(e.target.value)}>
+                        <select id="selectGenre" className="form-control" value={Number(genreId)}
+                                onChange={(e) => setGenreId(Number(e.target.value))}>
                             <option value="">Izberi žanr</option>
                             {genres.map((genre) => (
                                 <option key={genre.id} value={genre.id}>{genre.name}</option>

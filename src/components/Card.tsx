@@ -1,4 +1,23 @@
-const Card = ({data, deleteMovie, editMovie}) => {
+interface Genre {
+    id: number;
+    name: string;
+    description: string;
+}
+
+interface MovieList {
+    id: number;
+    name: string;
+    description: string;
+    genre: Genre;
+}
+
+interface CardProps {
+    data: MovieList;
+    deleteMovie: (id: number) => void;
+    editMovie: (id: number) => void;
+}
+
+const Card = ({ data, deleteMovie, editMovie }: CardProps) => {
   return (
       <>
           <div className="col" key={data.id}>
