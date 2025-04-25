@@ -115,31 +115,19 @@ const Movie = () => {
                     </div>
                 </form>
 
-
-                    {movies.map((movie) => (
-                        <div className="album py-5 bg-body-tertiary">
-                            <div className="container">
-                                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                                    <div className="col">
-                                        <Card key={movie.id} data={movie} deleteMovie={deleteMovie} editMovie={editMovie}  />
-                                    </div>
-                                </div>
-                            </div>
+                <div className="album py-5 bg-body-tertiary">
+                    <div className="container">
+                        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                            {movies.map((movie) => (
+                                <Card key={movie.id} data={movie} deleteMovie={deleteMovie}
+                                      editMovie={editMovie}/>
+                                ))}
                         </div>
-                    ))}
-
-                <ul>
-                    {movies.map((movie) => (
-                        <li key={movie.id}>
-                            {movie.name} ( {movie.genre?.name || 'ni žanra'} )
-                            <button onClick={() => deleteMovie(movie.id)}>Izbriši</button>
-                            <button onClick={() => editMovie(movie.id)}>Uredi</button>
-                    </li>
-                ))}
-            </ul>
-        </main>
-    <Footer/>
-</>
-)
+                    </div>
+                </div>
+            </main>
+            <Footer/>
+        </>
+    )
 }
 export default Movie;
