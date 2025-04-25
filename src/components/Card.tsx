@@ -12,12 +12,12 @@ interface MovieList {
 }
 
 interface CardProps {
-    data: MovieList;
-    deleteMovie: (id: number) => void;
-    editMovie: (id: number) => void;
+    data: MovieList | Genre;
+    onDelete: (id: number) => void;
+    onEdit: (id: number) => void;
 }
 
-const Card = ({ data, deleteMovie, editMovie }: CardProps) => {
+const Card = ({ data, onDelete, onEdit }: CardProps) => {
   return (
       <>
           <div className="col" key={data.id}>
@@ -27,19 +27,23 @@ const Card = ({ data, deleteMovie, editMovie }: CardProps) => {
                       <p className="card-text">{data.description}</p>
                       <div className="d-flex justify-content-between align-items-center">
                           <div className="btn-group">
-                              <button onClick={() => deleteMovie(data.id)} type="button"
+                              <button onClick={() => onDelete(data.id)} type="button"
                                       className="btn btn-sm btn-outline-secondary">Izbriši
                               </button>
-                              <button onClick={() => editMovie(data.id)} type="button"
+                              <button onClick={() => onEdit(data.id)} type="button"
                                       className="btn btn-sm btn-outline-secondary">Uredi
                               </button>
                           </div>
-                          <small className="text-body-secondary">{data.genre?.name || 'ni žanra'}</small>
+                          {"genre" in data && (
+                              <small className="text-body-secondary">
+                                  {data.genre?.name || 'ni žanra'}
+                              </small>
+                          )}
                       </div>
                   </div>
               </div>
           </div>
-          </>
-          )
-          }
-          export default Card;
+      </>
+  )
+}
+export default Card;
