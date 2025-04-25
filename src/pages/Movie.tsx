@@ -49,7 +49,7 @@ const Movie = () => {
             name,
             description,
             genre:{
-                id:"1"
+                id:genreId
             }
         };
 
@@ -70,6 +70,7 @@ const Movie = () => {
         const movieData = res.data;
         setName(movieData.name);
         setDescription(movieData.description);
+        setGenreId(movieData.genre.id);
         setEditingId(id);
     }
 
@@ -87,7 +88,7 @@ const Movie = () => {
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder="Vnesi ime filma" value={name} onChange={(e) =>setName(e.target.value)} /><br />
                     <textarea placeholder="Vnesi opis filma" value={description} onChange={(e) =>setDescription(e.target.value)}/><br />
-                    <select onChange={(e)=>setGenreId(e.target.value)}>
+                    <select value={genreId} onChange={(e)=>setGenreId(e.target.value)}>
                         <option value="">Izberi žanr</option>
                         {genres.map((genre) => (
                             <option key={genre.id} value={genre.id}>{genre.name}</option>
