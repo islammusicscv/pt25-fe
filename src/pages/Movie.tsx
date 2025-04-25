@@ -2,6 +2,7 @@ import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Card from "../components/Card.tsx";
 
 interface MovieList {
     id: number;
@@ -86,29 +87,59 @@ const Movie = () => {
                 <h1>Filmi</h1>
 
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Vnesi ime filma" value={name} onChange={(e) =>setName(e.target.value)} /><br />
-                    <textarea placeholder="Vnesi opis filma" value={description} onChange={(e) =>setDescription(e.target.value)}/><br />
-                    <select value={genreId} onChange={(e)=>setGenreId(e.target.value)}>
-                        <option value="">Izberi žanr</option>
-                        {genres.map((genre) => (
-                            <option key={genre.id} value={genre.id}>{genre.name}</option>
-                        ))}
-                    </select>
-                    <input type="submit" value={editingId === null ? "Dodaj" : "Uredi"} />
+                    <div className="form-group">
+                        <label htmlFor="inputName">Vnesi ime filma</label>
+                        <input type="text" id="inputName" className="form-control" placeholder="Vnesi ime filma"
+                               value={name}
+                               onChange={(e) => setName(e.target.value)}/><br/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="inputDescription">Vnesi opis filma</label>
+                        <textarea id="inputDescription" className="form-control" placeholder="Vnesi opis filma"
+                                  value={description}
+                                  onChange={(e) => setDescription(e.target.value)}/><br/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="selectGenre">Izberi žanr</label>
+                        <select id="selectGenre" class="form-control" value={genreId}
+                                onChange={(e) => setGenreId(e.target.value)}>
+                            <option value="">Izberi žanr</option>
+                            {genres.map((genre) => (
+                                <option key={genre.id} value={genre.id}>{genre.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <input type="submit" className="btn btn-primary m-2"
+                               value={editingId === null ? "Dodaj" : "Uredi"}/>
+                    </div>
                 </form>
+
+
+                    {movies.map((movie) => (
+                        <div className="album py-5 bg-body-tertiary">
+                            <div className="container">
+                                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                    <div className="col">
+                                        <Card key={movie.id} data={movie} deleteMovie={deleteMovie} editMovie={editMovie}  />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
 
                 <ul>
                     {movies.map((movie) => (
                         <li key={movie.id}>
-                            {movie.name} ( {movie.genre.name} )
-                            <button onClick={()=>deleteMovie(movie.id)}>Izbriši</button>
-                            <button onClick={()=>editMovie(movie.id)}>Uredi</button>
-                        </li>
-                    ))}
-                </ul>
-            </main>
-            <Footer />
-        </>
-    )
+                            {movie.name} ( {movie.genre?.name || 'ni žanra'} )
+                            <button onClick={() => deleteMovie(movie.id)}>Izbriši</button>
+                            <button onClick={() => editMovie(movie.id)}>Uredi</button>
+                    </li>
+                ))}
+            </ul>
+        </main>
+    <Footer/>
+</>
+)
 }
 export default Movie;
